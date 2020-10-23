@@ -1,9 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const routes = function(data){
+	data.router.get('/', function(req, res){
+		data.template.setComponent('/modules/e_remit/views/dashboard.ejs').setContent({sub:'Home'}).play(req, res);
+	})
+	return data.router;
+}
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-module.exports = router;
+module.exports = routes;
