@@ -1,7 +1,9 @@
 const data = {
 	server: {
 		env: 'linux',
-		port: 3000
+		port: 3000,
+		assets: 'assets/files/',
+		session_secret: 'rJB7nfASntLfwEA8'
 	},
 	template: {
 		content: {
@@ -9,11 +11,12 @@ const data = {
 			icon: '',
 		},
 		component: {
-			header: '',
-			layout: '',
+			header: '/modules/system/views/theme/header.ejs',
+			layout: '/modules/system/views/theme/layout.ejs',
+			sidebar: '/modules/system/views/theme/sidebar.ejs',
 		},
 		view:{
-			header: false,
+			header: true,
 			footer: true,
 			sidebar: true
 		}

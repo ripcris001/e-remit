@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+<head>
+    <title><%=title %><% if(subTitle) { %> - <%=subTitle %> <% } %> </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="#">
+    <meta name="keywords"
+        content="Admin , Responsive, Landing, Bootstrap, App, Template, Mobile, iOS, Android, apple, creative app">
+    <meta name="author" content="#">
+    <!-- Favicon icon -->
+    <link rel="icon" href="<%=assets %>/assets/images/favicon.ico" type="image/x-icon">
+    <!-- Google font-->
+    <link href="../../../fonts.googleapis.com/css3b0a.css?family=Open+Sans:400,600,800" rel="stylesheet">
+    <!-- Required Fremwork -->
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- feather Awesome -->
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/icon/feather/css/feather.css">
+    <!-- themify-icons line icon -->
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/icon/themify-icons/themify-icons.css">
+    <!-- Syntax highlighter Prism css -->
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/pages/prism/prism.css">
+    <!-- Style.css -->
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/css/jquery.mCustomScrollbar.css">
+    <link rel="stylesheet" type="text/css" href="<%=assets %>/assets/css/pcoded-horizontal.min.css">
+
+    <!-- Required Jquery -->
+    <script type="text/javascript" src="<%=assets %>/bower_components/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="<%=assets %>/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="<%=assets %>/bower_components/popper.js/dist/umd/popper.min.js"></script>
+    <script type="text/javascript" src="<%=assets %>/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- jquery slimscroll js -->
+    <script type="text/javascript" src="<%=assets %>/bower_components/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- modernizr js -->
+    <script type="text/javascript" src="<%=assets %>/bower_components/modernizr/modernizr.js"></script>
+    <script type="text/javascript" src="<%=assets %>/bower_components/modernizr/feature-detects/css-scrollbars.js"></script>
+</head>
+<!-- Menu horizontal static layout -->
+<body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div class='contain'>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+                <div class="ring">
+                    <div class="frame"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+    <div id="pcoded" class="pcoded">
+        <div class="pcoded-container">
+            <!-- Menu header start -->
+            <% if(view && view.header){%> 
+                <%- include(header); %>
+            <% } %>
+            <!-- Menu header end -->
+            <div class="pcoded-main-container">
+                <% if(view && view.sidebar){%> 
+                    <%- include(sidebar); %>
+                <% } %>
+                <!-- Sidebar inner chat end-->
+                <div class="pcoded-wrapper">
+                    <div class="pcoded-content">
+                        <div class="pcoded-inner-content">
+                            <div class="main-body">
+                                <%- include(content); %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom js -->
+    <!-- <script type="text/javascript" src="<%=assets %>/assets/pages/dashboard/custom-dashboard.min.js"></script> -->
+    <script src="<%=assets %>/assets/js/pcoded.min.js"></script>
+    <script src="<%=assets %>/assets/js/horizontal-layout.min.js"></script>
+    <script src="<%=assets %>/assets/js/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script type="text/javascript" src="<%=assets %>/assets/js/script.js"></script>
+</body>
+
+
+<!-- Mirrored from demo.dashboardpack.com/adminty-html/default/menu-horizontal-static.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 30 Sep 2020 08:23:28 GMT -->
+</html>

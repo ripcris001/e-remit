@@ -3,14 +3,16 @@ const fs = require('fs');
 module.exports = function(input){
 	return {
 		dir: input.dir,
+		assets: input.assets,
 		view:{
 			header: input && input.template && input.template.view ? input.template.view.header : true,
 			footer: input && input.template && input.template.view ? input.template.view.footer : true,
 			sidebar: input && input.template && input.template.view ? input.template.view.sidebar : true
 		},
 		content:{
-			title: input && input.template && input.template.content && input.template.content.title ? input.template.content.title : '',
-			icon: input && input.template && input.template.content && input.template.content.icon ? input.template.content.icon : '',
+			sub: '?',
+			title: input && input.template && input.template.content && input.template.content.title ? input.template.content.title : '?',
+			icon: input && input.template && input.template.content && input.template.content.icon ? input.template.content.icon : '?',
 		},
 		template:{
 			error:{
@@ -84,7 +86,7 @@ module.exports = function(input){
 				const count = checkData.length;
 				for(let a = 0; a < count; a++){
 					const index = checkData[a];
-					const loopdata = checkData[index];
+					const loopdata = data[index];
 					if(me.view[index]){
 						me.view[index] = loopdata;
 					}else{
@@ -103,7 +105,8 @@ module.exports = function(input){
 				const count = checkData.length;
 				for(let a = 0; a < count; a++){
 					const index = checkData[a];
-					const loopdata = checkData[index];
+					const loopdata = data[index];
+					console.log(index, loopdata, me.content[index]);
 					if(me.content[index]){
 						me.content[index] = loopdata;
 					}else{
@@ -118,23 +121,27 @@ module.exports = function(input){
 		setComponent: function(data){
 			const finalPath = `${this.dir}${data}`;
 			if(data && this.checkFile(finalPath)){
-				this.contentComponent = data;
+				this.contentComponent = finalPath;
 			}else{
 				this.contentComponent = this.template.error.err404;
 			}
+			return this;
 		},
 		play: function(req,res){
 			try{
 				console.log('play is trigger');
+				console.log(this);
 				const options = {
 					title: this.content.title,
+					subTitle: this.content.sub,
 					icon: this.content.icon,
 					header: this.template.header,
 					footer: this.template.footer,
 					sidebar: this.template.sidebar,
 					content: this.contentComponent,
 					data: this.data,
-					view: this.view
+					view: this.view,
+					assets: this.assets
 				}
 				res.render(this.template.layout, options);
 			}catch(err){
