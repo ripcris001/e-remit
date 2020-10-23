@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%-title %></title>
+</head>
+<body>
+	<% if(view && view.header){ %>
+	<div class="template-header"><%- include(header) %></div>
+	<% } %>
+	<% if(view && view.sidebar){ %>
+	<div class="template-footer"><%- include(sidebar) %></div>
+	<% } %>
+	<% if(content){ %>
+	<div class="template-content"><%- include(content) %></div>
+	<% } %>
+	<% if(view && view.footer){ %>
+	<div class="template-footer"><%- include(footer) %></div>
+	<% } %>
+</body>
+</html>

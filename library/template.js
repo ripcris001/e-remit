@@ -1,70 +1,145 @@
 'use strict';
-module.exports = function(a){
-	
-	// console.log(getAllMenu());
+const fs = require('fs');
+module.exports = function(input){
 	return {
-		header:a.dir+'/views/header.ejs', // set default header
-		showHeader:true,
-		footer:a.dir+'/views/footer.ejs',  // set default footer
-		layout:a.dir+'/views/layout.ejs', // set default layout
-		sidebar:a.dir+'/views/sidebar.ejs', // set default sidebar
-		slideSidebar:false,
-		title:'',
-		establishment:'',
-		icon:'',
+		dir: input.dir,
+		view:{
+			header: input && input.template && input.template.view ? input.template.view.header : true,
+			footer: input && input.template && input.template.view ? input.template.view.footer : true,
+			sidebar: input && input.template && input.template.view ? input.template.view.sidebar : true
+		},
+		content:{
+			title: input && input.template && input.template.content && input.template.content.title ? input.template.content.title : '',
+			icon: input && input.template && input.template.content && input.template.content.icon ? input.template.content.icon : '',
+		},
+		template:{
+			error:{
+				err404: input.dir+'/modules/system/views/error/404.ejs',
+				err403: input.dir+'/modules/system/views/error/403.ejs'
+			},
+			header:input && input.template && input.template.component && input.template.component.header ? input.dir+input.template.component.header : input.dir+'/modules/system/views/default/header.ejs',
+			footer:input && input.template && input.template.component && input.template.component.footer ? input.dir+input.template.component.footer : input.dir+'/modules/system/views/default/footer.ejs', 
+			layout:input && input.template && input.template.component && input.template.component.layout ? input.dir+input.template.component.layout : input.dir+'/modules/system/views/default/layout.ejs',
+			sidebar:input && input.template && input.template.component && input.template.component.sidebar ? input.dir+input.template.component.sidebar : input.dir+'/modules/system/views/default/sidebar.ejs'
+		},
+		contentComponent: '',
 		data:{},
-		menuHtml:'',
-		collections:{},
-		set: function(req,res,f){
-			// set route frontend template
-
-			// res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
-			// res.setHeader('Cache-Control', 'public, max-age=86400000');
-			if(!f && !global.__.file_status(f)) {
-				res.end('Template Not Found');
+		checkFile:function(path){
+			try{
+				const verifyPath = fs.existsSync(`${path}`);
+				if(path && verifyPath){
+					return true;
+				}else{
+					return false;
+				}
+			}catch(err){
+				console.log(err.message);
+				return false;
 			}
-			if(this.title) {
-				a.title = this.title;
-			} else if(!a.title) {
-				a.title = '';
+		},
+		set: function(data){
+			const checkData = data ? Object.keys(data) : {};
+			if(checkData && checkData.length){
+				if(data.component && !this.checkFile(data.component)) {
+					res.end('Template Not Found');
+				}
+				if(data.title) {
+					this.content.title = data.title;
+				}
+				if(data.component) {
+					this.component = data.component;
+				}
+			}else{
+				console.log('no set data');
 			}
-			// console.log(global.__.file_status(this.header));
-			// check if header exists
-			if(this.header && !global.__.file_status(this.header)) {
-				this.header = a.dir+'/views/header.ejs';
+			return this;
+		},
+		setTemplate: function(data){
+			const me = this;
+			const checkData = data ? Object.keys(data) : {};
+			if(checkData && checkData.length){
+				const count = checkData.length;
+				for(let a = 0; a < count; a++){
+					const index = checkData[a];
+					const loopdata = checkData[index];
+					if(me.template[index]){
+						if(this.checkFile(data.component)){
+							me.template[index] = me.dir + loopdata;
+						}else{
+							me.template[index] = me.template.error.err404;
+						}
+					}else{
+						console.log(`Template ${index} is not on the template!`);
+					}
+				}
+			}else{
+				console.log('no set data');
 			}
-			// check if footer exists
-			if(this.footer && !global.__.file_status(this.footer)) {
-				this.footer = a.dir+'/views/footer.ejs';
+			return this;
+		},
+		setViewConfig: function(data){
+			const me = this;
+			const checkData = data ? Object.keys(data) : {};
+			if(checkData && checkData.length){
+				const count = checkData.length;
+				for(let a = 0; a < count; a++){
+					const index = checkData[a];
+					const loopdata = checkData[index];
+					if(me.view[index]){
+						me.view[index] = loopdata;
+					}else{
+						console.log(`${index} is not on the view config!`);
+					}
+				}
+			}else{
+				console.log('no set data');
 			}
-			// check if layout exists
-			if(this.layout && !global.__.file_status(this.layout)) {
-				this.layout = a.dir+'/views/layout.ejs';
+			return this;
+		},
+		setContent: function(data){
+			const me = this;
+			const checkData = data ? Object.keys(data) : {};
+			if(checkData && checkData.length){
+				const count = checkData.length;
+				for(let a = 0; a < count; a++){
+					const index = checkData[a];
+					const loopdata = checkData[index];
+					if(me.content[index]){
+						me.content[index] = loopdata;
+					}else{
+						console.log(`${index} is not on the view config!`);
+					}
+				}
+			}else{
+				console.log('no set data');
 			}
-			// check if sidebar exists
-			if(this.sidebar && !global.__.file_status(this.sidebar)) {
-				this.sidebar = a.dir+'/views/sidebar.ejs';
+			return this;
+		},
+		setComponent: function(data){
+			const finalPath = `${this.dir}${data}`;
+			if(data && this.checkFile(finalPath)){
+				this.contentComponent = data;
+			}else{
+				this.contentComponent = this.template.error.err404;
 			}
-			// option data for ejs file
-			var options = {
-				menuHtml:this.menuHtml,
-				headNav:'',
-				pageClass:a.class,
-				data:this.data,
-				access:true,
-				showHeader:this.showHeader,
-				slideSidebar:this.slideSidebar,
-				collections:this.collections,
-				title: a.title,
-				icon:this.icon,
-				content:f,
-				header:this.header,
-				footer:this.footer,
-				sidebar:this.sidebar,
-				symbol:a.symbol
+		},
+		play: function(req,res){
+			try{
+				console.log('play is trigger');
+				const options = {
+					title: this.content.title,
+					icon: this.content.icon,
+					header: this.template.header,
+					footer: this.template.footer,
+					sidebar: this.template.sidebar,
+					content: this.contentComponent,
+					data: this.data,
+					view: this.view
+				}
+				res.render(this.template.layout, options);
+			}catch(err){
+				res.status(500).send();
 			}
-			// use the layout file as template
-			res.render(this.layout, options);
 		}
 	}
 }
