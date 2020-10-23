@@ -1,6 +1,6 @@
 const routes = function(data){
 	data.router.get('/', function(req, res){
-		res.send("home");
+		data.template.play(req, res);
 	})
 	return data.router;
 }

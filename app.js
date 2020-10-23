@@ -4,18 +4,20 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const config = require('./bin/config');
+const templater = require('./library/template');
+const fs = require('fs');
 const app = express();
 const routes = [
 	{path: "/", route: '/modules/system/routes/home'},
-	{path: "/user", route: '/routes/users'}
+	{path: "/user", route: '/modules/user/routes/user'}
 ]
 global.__system = {};
 global.__dir = __dirname;
 global.__system.config = config;
 global.__system.route = routes;
+global.__system.template = templater({dir:global.__dir, template: config.template});
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(express.json());
@@ -39,8 +41,22 @@ app.use(function(err, req, res, next) {
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
   // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+  // res.status(err.status || 500);
+  if(err.status){
+  	switch(err.status){
+  		case 404:
+  			res.json('error 404');
+  		break;
+  		case 403:
+  			res.json('error 404');
+  		break;
+  		default:
+  			res.json('unknown error');
+  		break;
+  	}
+  }else{
+  	next();
+  }
 });
 
 module.exports = app;
