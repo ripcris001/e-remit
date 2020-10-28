@@ -3,6 +3,7 @@ const data = {
 		env: 'linux',
 		port: 3000,
 		assets: 'assets/files/',
+		assets_path: '/ASSETS',
 		session_secret: 'rJB7nfASntLfwEA8'
 	},
 	template: {
@@ -20,7 +21,8 @@ const data = {
 			footer: true,
 			sidebar: true
 		}
-	}
+	},
+	homepage: '/dashboard'
 }
 
 module.exports = data;

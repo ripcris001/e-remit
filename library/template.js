@@ -106,7 +106,6 @@ module.exports = function(input){
 				for(let a = 0; a < count; a++){
 					const index = checkData[a];
 					const loopdata = data[index];
-					console.log(index, loopdata, me.content[index]);
 					if(me.content[index]){
 						me.content[index] = loopdata;
 					}else{
@@ -130,7 +129,6 @@ module.exports = function(input){
 		play: function(req,res){
 			try{
 				console.log('play is trigger');
-				console.log(this);
 				const options = {
 					title: this.content.title,
 					subTitle: this.content.sub,
