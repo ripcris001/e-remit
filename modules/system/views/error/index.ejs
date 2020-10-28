@@ -1,0 +1,7 @@
+<% if(code == 403){ %>
+	<%- include("403.ejs") %>
+<% } else if (code == 404){ %>
+	<%- include("404.ejs") %>
+<% } else { %>
+	This errpr is <%=code %>
+<% } %>

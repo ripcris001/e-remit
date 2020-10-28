@@ -6,9 +6,18 @@ const system = global.__system;
 const root = global.__dir;
 const template = global.__system.template;
 const hmvc = {
-	init: function(data){
+	init: function(app){
 		const count = system.route && system.route.length ? system.route.length : 0;
 		if(count){
+			router.use(function(req, res, next){
+				const allowCoder = [200];
+				const pageStatus = res.statusCode;
+				if(allowCoder.indexOf(pageStatus) === -1){
+					res.render(`error/index`, {code: pageStatus});
+				}else{
+					next();
+				}
+			});
 			let component = {
 				router: router,
 				template: template
@@ -20,12 +29,13 @@ const hmvc = {
 				const filePath = `${root}${loopdata.route}`;
 				const verifyPath = fs.existsSync(`${filePath}.js`);
 				if(verifyPath){
+					console.log(`${loopdata.path}`);
 					const routeLoad = require(filePath)(component);
-					data.use(`${loopdata.path}`, routeLoad);
+					app.use(`${loopdata.path}`, routeLoad);
 				}
 			}
 		}else{
-			data.use(function(req, res){
+			app.use(function(req, res){
 				res.status(404).send('No route Found');
 			})
 		}
